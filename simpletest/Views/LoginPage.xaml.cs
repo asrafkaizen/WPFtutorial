@@ -32,7 +32,7 @@ namespace simpletest.Views
             try
             {
                 string email = this.txtEmail.Text;
-                string password = this.txtPassword.Text;
+                string password = this.txtPassword.Password;
 
                 // Verification.  
                 if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))

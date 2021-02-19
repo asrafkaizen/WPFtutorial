@@ -30,25 +30,7 @@ namespace simpletest.Views
 
             this.txtSearch.Text = "Email";
 
-            try {
-                string strConn = "Data Source=DESKTOP-UJS9FKG" + "\\" + "SQLEXPRESS;Database=Assesment;User Id=acap;Password=acapacap;";
-                SqlConnection sqlConnection = new SqlConnection(strConn);
-                sqlConnection.Open();
-
-                string Get_Data = "SELECT id, name, email, phoneNumber FROM Users";
-                SqlCommand cmd = sqlConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-
-                DataSet ds = new DataSet();
-                sda.Fill(ds);
-                userlist.ItemsSource = ds.Tables[0].DefaultView;
-            }
-            catch //(SqlException ex)
-            {
-                MessageBox.Show("db error. edit s.code to enable console write");
-                //Console.WriteLine(ex.ToString());
-            }
+            listuser();
         }
         private void BtnReg_Click(object sender, RoutedEventArgs e)
         {
@@ -58,76 +40,88 @@ namespace simpletest.Views
                 string email = this.txtEmail.Text;
                 string phone = this.txtPhone.Text;
                 string password = this.txtPassword.Text;
+                string roleindex = this.role.SelectedIndex.ToString();
+                string role = "admin";
+                if (roleindex == "0")
+                {
+                    role = "user";
+                }
 
                 // Verification.  
                 if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(password))
                 {
-                    MessageBox.Show("This field can not be empty. Please fill all fields", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(
+                        "This field can not be empty. Please fill all fields"
+                        , "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
                 // Save Info.  
-                HomeBusinessLogic.SaveInfo(name, email, phone, password);
+                HomeBusinessLogic.SaveInfo(name, email, phone, password, role);
 
                 // Display Message  
-                MessageBox.Show("You are Successfully! Registered", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("You are Successfully Registered", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                listuser();
             }
             catch (Exception ex)
             {
                 Console.Write(ex);
 
-                // Display Message  
-                MessageBox.Show("Something goes wrong, Please try again later.", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+                // Assuming data insert error is only due to duplicate email
+                MessageBox.Show("The email has already been registered. Please use a different email", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void btnreload_click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                string strConn = "Data Source=DESKTOP-UJS9FKG" + "\\" + "SQLEXPRESS;Database=Assesment;User Id=acap;Password=acapacap;";
-                SqlConnection sqlConnection = new SqlConnection(strConn);
-                sqlConnection.Open();
-
-                string Get_Data = "SELECT id, name, email, phoneNumber FROM Users";
-                SqlCommand cmd = sqlConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-
-                DataSet ds = new DataSet();
-                sda.Fill(ds);
-                userlist.ItemsSource = ds.Tables[0].DefaultView;
-            }
-            catch //(SqlException ex)
-            {
-                MessageBox.Show("db error. edit s.code to enable console write");
-                //Console.WriteLine(ex.ToString());
-            }
+            listuser();
         }
 
         private void btnsearch_click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                string strConn = "Data Source=DESKTOP-UJS9FKG" + "\\" + "SQLEXPRESS;Database=Assesment;User Id=acap;Password=acapacap;";
-                SqlConnection sqlConnection = new SqlConnection(strConn);
-                sqlConnection.Open();
+            string strConn = "Data Source=DESKTOP-UJS9FKG" + "\\" + "SQLEXPRESS;Database=Assesment;User Id=acap;Password=acapacap;";
+            SqlConnection sqlConnection = new SqlConnection(strConn);
+            sqlConnection.Open();
 
-                string email = this.txtSearch.Text;
-                string Get_Data = "SELECT id, name, email, phoneNumber FROM Users WHERE email like '%" + email + "%'";
-                SqlCommand cmd = sqlConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            string txtemail = this.txtSearch.Text;
+            string Get_Data = "SELECT id, name, email, phoneNumber, role FROM Users where Email = '" + txtemail + "'";
+            SqlCommand cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = Get_Data;
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
 
-                DataSet ds = new DataSet();
-                sda.Fill(ds);
-                userlist.ItemsSource = ds.Tables[0].DefaultView;
-            }
-            catch //(SqlException ex)
+            DataSet ds = new DataSet();
+            sda.Fill(ds);
+
+            //check if email is found
+            if (ds.Tables[0].Rows.Count > 0)
             {
-                MessageBox.Show("db error. edit s.code to enable console write");
-                //Console.WriteLine(ex.ToString());
+                string name = ds.Tables[0].Rows[0]["name"].ToString();
+                string email = ds.Tables[0].Rows[0]["email"].ToString();
+                string phone = ds.Tables[0].Rows[0]["phoneNumber"].ToString();
+                string role = ds.Tables[0].Rows[0]["role"].ToString();
+                string id = ds.Tables[0].Rows[0]["id"].ToString();
+
+                this.txtid.Text = id;
+                this.txtName.Text = name;
+                this.txtEmail.Text = email;
+                this.txtPhone.Text = phone;
+                if (role == "0")
+                {
+                    this.role.SelectedIndex = 0;
+                }
+                else
+                {
+                    this.role.SelectedIndex = 1;
+                }
+                this.btnUpdate.Visibility = Visibility.Visible;
+
             }
+            else
+            {
+                //email is not found
+                MessageBox.Show("Email not found", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
         public void RemovePlaceholder(object sender, EventArgs e)
@@ -144,6 +138,72 @@ namespace simpletest.Views
                 this.txtSearch.Text = "Email";
         }
 
+        private void listuser()
+        {
+            try
+            {
+                string strConn = "Data Source=DESKTOP-UJS9FKG" + "\\" + "SQLEXPRESS;Database=Assesment;User Id=acap;Password=acapacap;";
+                SqlConnection sqlConnection = new SqlConnection(strConn);
+                sqlConnection.Open();
 
+                string Get_Data = "SELECT id, name, email, phoneNumber, role FROM Users";
+                SqlCommand cmd = sqlConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+
+                DataSet ds = new DataSet();
+                sda.Fill(ds);
+                userlist.ItemsSource = ds.Tables[0].DefaultView;
+            }
+            catch //(SqlException ex)
+            {
+                MessageBox.Show("db error. edit s.code to enable console write");
+                //Console.WriteLine(ex.ToString());
+            }
+        }
+
+        private void BtnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string id = this.txtid.Text;
+                string name = this.txtName.Text;
+                string email = this.txtEmail.Text;
+                string phone = this.txtPhone.Text;
+                string password = this.txtPassword.Text;
+                string roleindex = this.role.SelectedIndex.ToString();
+                string role = "admin";
+                if (roleindex == "0")
+                {
+                    role = "user";
+                }
+
+                // Verification.  
+                if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(id) || string.IsNullOrEmpty(password))
+                {
+                    MessageBox.Show(
+                        "This field can not be empty. Please fill all fields"
+                        , "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Save Info.  
+                HomeBusinessLogic.UpdateInfo(id, name, email, phone, password, role);
+
+                // Display Message  
+                MessageBox.Show("Update succesful", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                listuser();
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+
+                // Assuming data insert error is only due to duplicate email
+                MessageBox.Show("Update error. Check logs for detail", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+    ////////add new functions above this line
     }
 }

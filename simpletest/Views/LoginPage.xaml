@@ -5,15 +5,17 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:simpletest.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="400"
+      d:DesignHeight="300" d:DesignWidth="400"
       Title="Login">
 
     <Grid>
-        <StackPanel Orientation="Vertical"   
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Width=" 400"  
-                    Height="600" >
+        <StackPanel 
+                    Orientation="Vertical"   
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Width=" 280"  
+                    Height="300"
+                    Background="White">
 
             <TextBlock Text="Email"  
                                    VerticalAlignment="Top"  
@@ -42,7 +44,7 @@
                                    FontSize="18"   
                                    Foreground="Black" />
 
-            <TextBox x:Name="txtPassword"   
+            <PasswordBox x:Name="txtPassword"   
                                     BorderThickness="1"  
                                     FontSize="18"  
                                     Width="250"  

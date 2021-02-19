@@ -28,14 +28,30 @@ namespace simpletest.Model.BusinessLogic.Helper_Code.Common
             }
         }
 
-        public static void SaveInfo(string name, string email, string phone, string password)
+        public static void SaveInfo(string name, string email, string phone, string password, string role)
         {
             try
             {
-                string role = "user";
                 // Query.  
                 string query = "INSERT INTO [Users] ([name], [email], [phoneNumber], [password], [role])" +
                                 " Values ('" + name + "', '" + email + "','" + phone + "','" + password + "','" + role + "')";
+
+                // Execute.  
+                DAL.executeQuery(query);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static void UpdateInfo(string id, string name, string email, string phone, string password, string role)
+        {
+            try
+            {
+                // Query.  
+                string query = "update USERS set name='" + name + "', email='" + email + "', phoneNumber='" 
+                    + phone + "', password='" + password + "', role='" + role + "'where id='" + id + "'";
 
                 // Execute.  
                 DAL.executeQuery(query);
