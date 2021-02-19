@@ -32,7 +32,7 @@ namespace simpletest.Model.BusinessLogic.Helper_Code.Common
         {
             try
             {
-                string role = "admin";
+                string role = "user";
                 // Query.  
                 string query = "INSERT INTO [Users] ([name], [email], [phoneNumber], [password], [role])" +
                                 " Values ('" + name + "', '" + email + "','" + phone + "','" + password + "','" + role + "')";
@@ -45,5 +45,6 @@ namespace simpletest.Model.BusinessLogic.Helper_Code.Common
                 throw ex;
             }
         }
+
     }
 }

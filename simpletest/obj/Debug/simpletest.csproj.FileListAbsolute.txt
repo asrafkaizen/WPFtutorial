@@ -15,3 +15,5 @@ C:\Users\asrafkaizen\source\repos\simpletest\simpletest\obj\Debug\simpletest.csp
 C:\Users\asrafkaizen\source\repos\simpletest\simpletest\obj\Debug\simpletest.csproj.CoreCompileInputs.cache
 C:\Users\asrafkaizen\source\repos\simpletest\simpletest\obj\Debug\simpletest.exe
 C:\Users\asrafkaizen\source\repos\simpletest\simpletest\obj\Debug\simpletest.pdb
+C:\Users\asrafkaizen\source\repos\simpletest\simpletest\obj\Debug\Views\LoginPage.g.cs
+C:\Users\asrafkaizen\source\repos\simpletest\simpletest\obj\Debug\Views\LoginPage.baml
