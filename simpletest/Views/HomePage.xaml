@@ -14,7 +14,7 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" 
@@ -50,7 +50,7 @@
                 <Border 
                         VerticalAlignment="Top"
                         Width=" 280"  
-                        Height="600"   
+                        Height="550"   
                         BorderThickness="1"   
                         BorderBrush="Black"   
                         Opacity="1">
@@ -58,7 +58,7 @@
                     <StackPanel Orientation="Vertical"   
                                 VerticalAlignment="Top"  
                                 Width=" 270"  
-                                Height="590" >
+                                Height="550" >
 
                         <TextBox x:Name="txtid"   
                                    Visibility="Hidden" />
@@ -66,7 +66,7 @@
                         <TextBlock Text="Enter Name"  
                                    VerticalAlignment="Top"  
                                    HorizontalAlignment="Left"
-                                   Margin="10,15,0,0"   
+                                   Margin="10,2,0,0"   
                                    FontWeight="Bold"   
                                    FontSize="16"   
                                    Foreground="Black" />
@@ -85,7 +85,7 @@
                         <TextBlock Text="Enter Email"  
                                    VerticalAlignment="Center"    
                                    HorizontalAlignment="Left"
-                                   Margin="10,15,0,0"   
+                                   Margin="10,10,0,0"   
                                    FontWeight="Bold"   
                                    FontSize="16"   
                                    Foreground="Black" />
@@ -98,13 +98,13 @@
                                     Background="{x:Null}"   
                                     HorizontalAlignment="Left"
                                     Margin="10,0,0,0"   
-                                    Padding="10,12,0,0"   
+                                    Padding="10,10,0,0"   
                                     Foreground="Black"  />
 
                         <TextBlock Text="Enter Phone Number"  
                                    VerticalAlignment="Center"   
                                    HorizontalAlignment="Left"
-                                   Margin="10,15,0,0"   
+                                   Margin="10,10,0,0"    
                                    FontWeight="Bold"   
                                    FontSize="16"   
                                    Foreground="Black" />
@@ -117,13 +117,13 @@
                                     Background="{x:Null}"  
                                     HorizontalAlignment="Left"
                                     Margin="10,0,0,0"   
-                                    Padding="10,12,0,0" 
+                                    Padding="10,10,0,0"   
                                     Foreground="Black"  />
 
                         <TextBlock Text="Enter Password"  
                                    VerticalAlignment="Center" 
                                    HorizontalAlignment="Left"
-                                   Margin="10,15,0,0"   
+                                   Margin="10,10,0,0"   
                                    FontWeight="Bold"   
                                    FontSize="16"   
                                    Foreground="Black" />
@@ -136,15 +136,15 @@
                                     Background="{x:Null}"  
                                     HorizontalAlignment="Left"
                                     Margin="10,0,0,0"   
-                                    Padding="10,12,0,0"   
+                                    Padding="10,10,0,0"   
                                     Foreground="Black" />
 
                         <TextBlock Text="Choose Role"  
                                    VerticalAlignment="Center" 
                                    HorizontalAlignment="Left"
-                                   Margin="10,15,0,0"   
+                                   Margin="10,10,0,0"   
                                    FontWeight="Bold"   
-                                   FontSize="16"   
+                                   FontSize="14"   
                                    Foreground="Black" />
 
                         <ComboBox 
@@ -158,9 +158,9 @@
                         <Button x:Name="btnReg"  
                                 Content="Register"  
                                 HorizontalAlignment="Center"
-                                Width="250"   
-                                Height="40"   
-                                Margin="10,20,10,10"  
+                                Width="200"   
+                                Height="30"   
+                                Margin="0,15,0,0"  
                                 FontSize="16"   
                                 FontWeight="Bold"   
                                 Click="BtnReg_Click" />
@@ -168,14 +168,22 @@
                         <Button x:Name="btnUpdate"  
                                 Content="Update"  
                                 HorizontalAlignment="Center"
-                                Width="250"   
-                                Height="40"   
-                                Margin="10,20,10,10"  
+                                Width="200"   
+                                Height="30"   
+                                Margin="0,5,0,0"  
                                 FontSize="16"   
                                 FontWeight="Bold"   
                                 Click="BtnUpdate_Click"
                                 Visibility="Hidden"/>
 
+                        <Button x:Name="btnImport"  
+                                Content="Import from excel"  
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                Width="250"   
+                                Height="30"   
+                                Margin="5,70,5,10"  
+                                FontSize="14" />
 
                     </StackPanel>
                 </Border>

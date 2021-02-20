@@ -28,7 +28,7 @@ namespace simpletest
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            this.mainFrame.Navigate(new Uri("/Views/LoginPage.xaml", UriKind.Relative));
+            this.mainFrame.Navigate(new Uri("/Views/HomePage.xaml", UriKind.Relative));
         }
     }
 }
