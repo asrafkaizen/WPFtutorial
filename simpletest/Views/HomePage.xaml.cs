@@ -34,6 +34,7 @@ namespace simpletest.Views
 
             listuser();
         }
+
         private void BtnReg_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -107,7 +108,7 @@ namespace simpletest.Views
                 this.txtName.Text = name;
                 this.txtEmail.Text = email;
                 this.txtPhone.Text = phone;
-                if (role == "0")
+                if (role == "user")
                 {
                     this.role.SelectedIndex = 0;
                 }
