@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
 using System.Data.SqlClient;
+using simpletest.Model.BusinessLogic.Helper_Code.Common;
 
 namespace simpletest.Views
 {
@@ -41,7 +42,8 @@ namespace simpletest.Views
                     return;
                 }
 
-                string strConn = "Data Source=DESKTOP-UJS9FKG" + "\\" + "SQLEXPRESS;Database=Assesment;User Id=acap;Password=acapacap;";
+
+                string strConn = HomeBusinessLogic.getcon();
                 SqlConnection sqlConnection = new SqlConnection(strConn);
                 sqlConnection.Open();
 

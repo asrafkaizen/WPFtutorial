@@ -50,7 +50,7 @@ namespace simpletest.Model.BusinessLogic.Helper_Code.Common
             try
             {
                 // Query.  
-                string query = "update USERS set name='" + name + "', email='" + email + "', phoneNumber='" 
+                string query = "update USERS set name='" + name + "', email='" + email + "', phoneNumber='"
                     + phone + "', password='" + password + "', role='" + role + "'where id='" + id + "'";
 
                 // Execute.  
@@ -62,5 +62,10 @@ namespace simpletest.Model.BusinessLogic.Helper_Code.Common
             }
         }
 
+        public static string getcon()
+        {
+            string strConn = "Data Source=DESKTOP-UJS9FKG\\SQLEXPRESS;Database=Assesment;User Id=acap;Password=acapacap;";
+            return strConn;
+        }
     }
 }

@@ -26,6 +26,8 @@ namespace simpletest.Views
     /// </summary>
     public partial class HomePage : System.Windows.Controls.Page
     {
+        public string strConn = HomeBusinessLogic.getcon();
+
         public HomePage()
         {
             InitializeComponent();
@@ -82,7 +84,6 @@ namespace simpletest.Views
 
         private void btnsearch_click(object sender, RoutedEventArgs e)
         {
-            string strConn = "Data Source=DESKTOP-UJS9FKG" + "\\" + "SQLEXPRESS;Database=Assesment;User Id=acap;Password=acapacap;";
             SqlConnection sqlConnection = new SqlConnection(strConn);
             sqlConnection.Open();
 
@@ -145,7 +146,6 @@ namespace simpletest.Views
         {
             try
             {
-                string strConn = "Data Source=DESKTOP-UJS9FKG" + "\\" + "SQLEXPRESS;Database=Assesment;User Id=acap;Password=acapacap;";
                 SqlConnection sqlConnection = new SqlConnection(strConn);
                 sqlConnection.Open();
 

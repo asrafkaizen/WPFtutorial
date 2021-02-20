@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using simpletest.Model.BusinessLogic.Helper_Code.Common;
 
 namespace simpletest.Helper_Code.Common
 {
@@ -14,7 +15,7 @@ namespace simpletest.Helper_Code.Common
         {
             // Initialization.
             int rowCount = 0;
-            string strConn = "Data Source=DESKTOP-UJS9FKG" + "\\" + "SQLEXPRESS;Database=Assesment;User Id=acap;Password=acapacap;";
+            string strConn = HomeBusinessLogic.getcon();
             SqlConnection sqlConnection = new SqlConnection(strConn);
             SqlCommand sqlCommand = new SqlCommand();
 
