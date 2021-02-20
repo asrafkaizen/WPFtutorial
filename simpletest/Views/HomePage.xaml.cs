@@ -17,13 +17,14 @@ using System.Windows.Shapes;
 using simpletest.Helper_Code.Common;
 using simpletest.Model.BusinessLogic.Helper_Code.Common;
 using Microsoft.Win32;
+using Microsoft.Office.Interop.Excel;
 
 namespace simpletest.Views
 {
     /// <summary>
     /// Interaction logic for Page1.xaml
     /// </summary>
-    public partial class HomePage : Page
+    public partial class HomePage : System.Windows.Controls.Page
     {
         public HomePage()
         {
@@ -204,7 +205,90 @@ namespace simpletest.Views
             }
         }
 
-   
+
+        private void btnImport_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openfile = new OpenFileDialog();
+            openfile.DefaultExt = ".xlsx";
+            openfile.Filter = "(.xlsx)|*.xlsx";
+            //openfile.ShowDialog();
+
+            var browsefile = openfile.ShowDialog();
+
+            if (browsefile == true)
+            {
+                string txtFilePath = openfile.FileName;
+                Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+                Microsoft.Office.Interop.Excel.Workbook excelBook = excelApp.Workbooks.Open(txtFilePath, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+                Microsoft.Office.Interop.Excel.Worksheet excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelBook.Worksheets.get_Item(1); ;
+                Microsoft.Office.Interop.Excel.Range excelRange = excelSheet.UsedRange;
+
+                int rowCnt = 0;
+                int colCnt = 0;
+                string th = ""; //table header
+                int thname = 0;
+                int themail = 0;
+                int thphone = 0;
+                int thpassword = 99;
+                int throle = 0;
+
+                for (colCnt = 1; colCnt <= excelRange.Columns.Count; colCnt++)
+                {
+                    th = (string)(excelRange.Cells[1, colCnt] as Range).Value2;
+                    if (th.Equals("name", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        thname = colCnt;
+                    }
+                    else if (th.Equals("email", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        themail = colCnt;
+                    }
+                    else if (th.Equals("phoneNumber", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        thphone = colCnt;
+                    }
+                    else if (th.Equals("password", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        thpassword = colCnt;
+                    }
+                    else if (th.Equals("role", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        throle = colCnt;
+                    }
+                }
+
+                for (rowCnt = 2; rowCnt <= excelRange.Rows.Count; rowCnt++)
+                {
+                    //for (colCnt = 1; colCnt <= excelRange.Columns.Count; colCnt++){
+                    //    strCellData = (string)(excelRange.Cells[rowCnt, colCnt] as Range).Value2;
+                    //}   ---------old code where excel header is too well organized
+
+                    string cellname = Convert.ToString((excelRange.Cells[rowCnt, thname] as Range).Value2);
+                    string cellemail = Convert.ToString((excelRange.Cells[rowCnt, themail] as Range).Value2);
+                    string cellphone = Convert.ToString((excelRange.Cells[rowCnt, thphone] as Range).Value2);
+                    string cellpassword = Convert.ToString((excelRange.Cells[rowCnt, thpassword] as Range).Value2);
+                    string cellrole = Convert.ToString((excelRange.Cells[rowCnt, throle] as Range).Value2);
+                    try
+                    {
+                        HomeBusinessLogic.SaveInfo(cellname, cellemail, cellphone, cellpassword, cellrole);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.Write(ex);
+                        // Assuming data insert error is only due to duplicate email
+                        MessageBox.Show("Data row:" + rowCnt + ", email: " + cellemail + " is skipped. Email already exists", "Fail", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+                
+            }
+            else
+            {
+                MessageBox.Show("Import excel: Browsefile cancelled", "Fail", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            listuser();
+            MessageBox.Show("Data import successful", "Succesful", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
 
 
         ////////add new functions above this line

@@ -183,7 +183,8 @@
                                 Width="250"   
                                 Height="30"   
                                 Margin="5,70,5,10"  
-                                FontSize="14" />
+                                FontSize="14" 
+                                Click="btnImport_Click"/>
 
                     </StackPanel>
                 </Border>
