@@ -149,6 +149,7 @@ namespace simpletest.Views
                     this.role.SelectedIndex = 1;
                 }
                 this.btnUpdate.Visibility = Visibility.Visible;
+                this.txtPassword.Text = "";
 
             }
             else

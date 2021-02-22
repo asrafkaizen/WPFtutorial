@@ -8,6 +8,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Configuration;
 
 namespace simpletest.Model.BusinessLogic.Helper_Code.Common
 {
@@ -38,7 +39,6 @@ namespace simpletest.Model.BusinessLogic.Helper_Code.Common
             {
                 //password = password.GetHashCode().ToString();
                 password = GetStringSha256Hash(password);
-                MessageBox.Show(password, "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
                 string query = "update USERS set name='" + name + "', email='" + email + "', phoneNumber='"
                     + phone + "', password='" + password + "', role='" + role + "'where id='" + id + "'";
 
@@ -53,7 +53,7 @@ namespace simpletest.Model.BusinessLogic.Helper_Code.Common
 
         public static string getcon()
         {
-            string strConn = "Data Source=DESKTOP-UJS9FKG\\SQLEXPRESS;Database=Assesment;User Id=acap;Password=acapacap;";
+            string strConn = ConfigurationManager.AppSettings["constring2"];
             return strConn;
         }
 

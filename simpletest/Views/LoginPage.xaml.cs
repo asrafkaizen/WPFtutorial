@@ -74,7 +74,7 @@ namespace simpletest.Views
                 }
                 else
                 {
-                    MessageBox.Show("Login unsuccessful. Please admin email and password", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Login unsuccessful. Please enter admin email and password", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
             }
