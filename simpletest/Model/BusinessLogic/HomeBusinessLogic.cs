@@ -6,33 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace simpletest.Model.BusinessLogic.Helper_Code.Common
 {
     class HomeBusinessLogic
     {
-        public static void SaveInfo(string fullname)
-        {
-            try
-            {
-                // Query.  
-                string query = "INSERT INTO [Register] ([fullname])" +
-                                " Values ('" + fullname + "')";
-
-                // Execute.  
-                DAL.executeQuery(query);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
         public static void SaveInfo(string name, string email, string phone, string password, string role)
         {
+            
             try
             {
-                // Query.  
+                password = GetStringSha256Hash(password);
+
                 string query = "INSERT INTO [Users] ([name], [email], [phoneNumber], [password], [role])" +
                                 " Values ('" + name + "', '" + email + "','" + phone + "','" + password + "','" + role + "')";
 
@@ -49,7 +36,9 @@ namespace simpletest.Model.BusinessLogic.Helper_Code.Common
         {
             try
             {
-                // Query.  
+                //password = password.GetHashCode().ToString();
+                password = GetStringSha256Hash(password);
+                MessageBox.Show(password, "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
                 string query = "update USERS set name='" + name + "', email='" + email + "', phoneNumber='"
                     + phone + "', password='" + password + "', role='" + role + "'where id='" + id + "'";
 
@@ -66,6 +55,19 @@ namespace simpletest.Model.BusinessLogic.Helper_Code.Common
         {
             string strConn = "Data Source=DESKTOP-UJS9FKG\\SQLEXPRESS;Database=Assesment;User Id=acap;Password=acapacap;";
             return strConn;
+        }
+
+        internal static string GetStringSha256Hash(string text)
+        {
+            if (String.IsNullOrEmpty(text))
+                return String.Empty;
+
+            using (var sha = new System.Security.Cryptography.MD5CryptoServiceProvider())
+            {
+                byte[] textData = System.Text.Encoding.UTF8.GetBytes(text);
+                byte[] hash = sha.ComputeHash(textData);
+                return BitConverter.ToString(hash).Replace("-", String.Empty);
+            }
         }
     }
 }

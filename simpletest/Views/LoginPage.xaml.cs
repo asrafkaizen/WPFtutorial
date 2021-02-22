@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Data;
 using System.Data.SqlClient;
 using simpletest.Model.BusinessLogic.Helper_Code.Common;
+using System.Text.RegularExpressions;
 
 namespace simpletest.Views
 {
@@ -23,6 +24,8 @@ namespace simpletest.Views
     /// </summary>
     public partial class LoginPage : Page
     {
+        public bool formvalid = true;
+
         public LoginPage()
         {
             InitializeComponent();
@@ -42,6 +45,13 @@ namespace simpletest.Views
                     return;
                 }
 
+                if (formvalid == false)
+                {
+                    MessageBox.Show("Please use valid email format", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                password = HomeBusinessLogic.GetStringSha256Hash(password);
 
                 string strConn = HomeBusinessLogic.getcon();
                 SqlConnection sqlConnection = new SqlConnection(strConn);
@@ -64,7 +74,7 @@ namespace simpletest.Views
                 }
                 else
                 {
-                    MessageBox.Show("Login unsuccessful. Please enter correct email and password", "Fail", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Login unsuccessful. Please admin email and password", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
             }
@@ -73,7 +83,21 @@ namespace simpletest.Views
                 Console.Write(ex);
 
                 // Display Message  
-                MessageBox.Show("Something goes wrong, Please try again later.", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Something went wrong, Please try again later.", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void txtEmail_LostFocus(object sender, RoutedEventArgs e)
+        {
+            
+            if ((!String.IsNullOrEmpty(txtEmail.Text)) && (!Regex.IsMatch(txtEmail.Text, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$")))
+            {
+                MessageBox.Show("Please enter a valid email format", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+                formvalid = false;
+            }
+            else
+            {
+                formvalid = true;
             }
         }
     }

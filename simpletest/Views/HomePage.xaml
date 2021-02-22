@@ -99,7 +99,8 @@
                                     HorizontalAlignment="Left"
                                     Margin="10,0,0,0"   
                                     Padding="10,10,0,0"   
-                                    Foreground="Black"  />
+                                    Foreground="Black"
+                                    LostFocus="txtEmail_LostFocus"/>   
 
                         <TextBlock Text="Enter Phone Number"  
                                    VerticalAlignment="Center"   
@@ -118,7 +119,8 @@
                                     HorizontalAlignment="Left"
                                     Margin="10,0,0,0"   
                                     Padding="10,10,0,0"   
-                                    Foreground="Black"  />
+                                    Foreground="Black"
+                                    LostFocus="txtPhone_LostFocus"/>
 
                         <TextBlock Text="Enter Password"  
                                    VerticalAlignment="Center" 

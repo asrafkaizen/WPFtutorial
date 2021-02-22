@@ -18,6 +18,7 @@ using simpletest.Helper_Code.Common;
 using simpletest.Model.BusinessLogic.Helper_Code.Common;
 using Microsoft.Win32;
 using Microsoft.Office.Interop.Excel;
+using System.Text.RegularExpressions;
 
 namespace simpletest.Views
 {
@@ -27,6 +28,7 @@ namespace simpletest.Views
     public partial class HomePage : System.Windows.Controls.Page
     {
         public string strConn = HomeBusinessLogic.getcon();
+        public bool formvalid = true;
 
         public HomePage()
         {
@@ -35,6 +37,29 @@ namespace simpletest.Views
             this.txtSearch.Text = "Email";
 
             listuser();
+        }
+
+        private void listuser()
+        {
+            try
+            {
+                SqlConnection sqlConnection = new SqlConnection(strConn);
+                sqlConnection.Open();
+
+                string Get_Data = "SELECT name as Name, email as Email, phoneNumber as 'Phone Number' , role as Role FROM Users";
+                SqlCommand cmd = sqlConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+
+                DataSet ds = new DataSet();
+                sda.Fill(ds);
+                userlist.ItemsSource = ds.Tables[0].DefaultView;
+            }
+            catch //(SqlException ex)
+            {
+                MessageBox.Show("db error. edit source code to enable console write");
+                //Console.WriteLine(ex.ToString());
+            }
         }
 
         private void BtnReg_Click(object sender, RoutedEventArgs e)
@@ -58,6 +83,12 @@ namespace simpletest.Views
                     MessageBox.Show(
                         "This field can not be empty. Please fill all fields"
                         , "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                if (formvalid == false)
+                {
+                    MessageBox.Show("Please use valid email format", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -140,29 +171,6 @@ namespace simpletest.Views
         {
             if (string.IsNullOrWhiteSpace(this.txtSearch.Text))
                 this.txtSearch.Text = "Email";
-        }
-
-        private void listuser()
-        {
-            try
-            {
-                SqlConnection sqlConnection = new SqlConnection(strConn);
-                sqlConnection.Open();
-
-                string Get_Data = "SELECT id, name, email, phoneNumber, role FROM Users";
-                SqlCommand cmd = sqlConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-
-                DataSet ds = new DataSet();
-                sda.Fill(ds);
-                userlist.ItemsSource = ds.Tables[0].DefaultView;
-            }
-            catch //(SqlException ex)
-            {
-                MessageBox.Show("db error. edit s.code to enable console write");
-                //Console.WriteLine(ex.ToString());
-            }
         }
 
         private void BtnUpdate_Click(object sender, RoutedEventArgs e)
@@ -290,7 +298,26 @@ namespace simpletest.Views
             MessageBox.Show("Data import successful", "Succesful", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        private void txtEmail_LostFocus(object sender, RoutedEventArgs e)
+        {
 
+            if ((!String.IsNullOrEmpty(txtEmail.Text)) && (!Regex.IsMatch(txtEmail.Text, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$")))
+            {
+                MessageBox.Show("Please enter a valid email format", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+                formvalid = false;
+            }
+            else
+            {
+                formvalid = true;
+            }
+        }
+
+        private void txtPhone_LostFocus(object sender, RoutedEventArgs e)
+        {
+            string phonestr = this.txtPhone.Text;
+            phonestr = Regex.Replace(phonestr, "[^0-9]", "");
+            this.txtPhone.Text = phonestr;
+        }
 
         ////////add new functions above this line
     }
