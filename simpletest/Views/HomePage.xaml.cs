@@ -33,7 +33,8 @@ namespace simpletest.Views
         public HomePage()
         {
             InitializeComponent();
-
+            System.Windows.Application.Current.MainWindow.Height = 650;
+            System.Windows.Application.Current.MainWindow.Width = 700;
             this.txtSearch.Text = "Email";
 
             listuser();
@@ -150,6 +151,7 @@ namespace simpletest.Views
                 }
                 this.btnUpdate.Visibility = Visibility.Visible;
                 this.txtPassword.Text = "";
+                this.txtPasswordBox.Password = "";
 
             }
             else
@@ -191,7 +193,7 @@ namespace simpletest.Views
                 }
 
                 // Verification.  
-                if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(id) || string.IsNullOrEmpty(password))
+                if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(id))
                 {
                     MessageBox.Show(
                         "This field can not be empty. Please fill all fields"
@@ -200,7 +202,14 @@ namespace simpletest.Views
                 }
 
                 // Save Info.  
-                HomeBusinessLogic.UpdateInfo(id, name, email, phone, password, role);
+                if (string.IsNullOrEmpty(password))
+                {
+                    HomeBusinessLogic.UpdateInfo(id, name, email, phone, role);
+                }
+                else
+                {
+                    HomeBusinessLogic.UpdateInfo(id, name, email, phone, password, role);
+                }
 
                 // Display Message  
                 MessageBox.Show("Update succesful", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -269,14 +278,18 @@ namespace simpletest.Views
 
                 for (rowCnt = 2; rowCnt <= excelRange.Rows.Count; rowCnt++)
                 {
-                    //for (colCnt = 1; colCnt <= excelRange.Columns.Count; colCnt++){
-                    //    strCellData = (string)(excelRange.Cells[rowCnt, colCnt] as Range).Value2;
-                    //}   ---------old code where excel header is too well organized
-
                     string cellname = Convert.ToString((excelRange.Cells[rowCnt, thname] as Range).Value2);
                     string cellemail = Convert.ToString((excelRange.Cells[rowCnt, themail] as Range).Value2);
                     string cellphone = Convert.ToString((excelRange.Cells[rowCnt, thphone] as Range).Value2);
-                    string cellpassword = Convert.ToString((excelRange.Cells[rowCnt, thpassword] as Range).Value2);
+                    if (cellphone[0] != '0')
+                    {
+                        cellphone = "0" + cellphone;
+                    }
+                    string cellpassword = "password";
+                    if (thpassword != 99)
+                    {
+                        cellpassword = Convert.ToString((excelRange.Cells[rowCnt, thpassword] as Range).Value2);
+                    }                
                     string cellrole = Convert.ToString((excelRange.Cells[rowCnt, throle] as Range).Value2);
                     try
                     {
@@ -289,14 +302,13 @@ namespace simpletest.Views
                         MessageBox.Show("Data row:" + rowCnt + ", email: " + cellemail + " is skipped. Email already exists", "Fail", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
-                
+                MessageBox.Show("Data import successful", "Succesful", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
                 MessageBox.Show("Import excel: Browsefile cancelled", "Fail", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             listuser();
-            MessageBox.Show("Data import successful", "Succesful", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void txtEmail_LostFocus(object sender, RoutedEventArgs e)
@@ -318,6 +330,23 @@ namespace simpletest.Views
             string phonestr = this.txtPhone.Text;
             phonestr = Regex.Replace(phonestr, "[^0-9]", "");
             this.txtPhone.Text = phonestr;
+        }
+
+        private void txtPasswordBox_Change(object sender, RoutedEventArgs e)
+        {
+            this.txtPassword.Text = this.txtPasswordBox.Password;
+        }
+
+        private void btnShow_MouseLeftButtonDown(object sender, RoutedEventArgs e)
+        {
+            this.txtPassword.Visibility = Visibility.Visible;
+            this.txtPasswordBox.Visibility = Visibility.Collapsed;
+        }
+
+        private void btnShow_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            this.txtPassword.Visibility = Visibility.Collapsed;
+            this.txtPasswordBox.Visibility = Visibility.Visible;
         }
 
         ////////add new functions above this line

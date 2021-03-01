@@ -37,10 +37,25 @@ namespace simpletest.Model.BusinessLogic.Helper_Code.Common
         {
             try
             {
-                //password = password.GetHashCode().ToString();
                 password = GetStringSha256Hash(password);
                 string query = "update USERS set name='" + name + "', email='" + email + "', phoneNumber='"
                     + phone + "', password='" + password + "', role='" + role + "'where id='" + id + "'";
+
+                // Execute.  
+                DAL.executeQuery(query);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static void UpdateInfo(string id, string name, string email, string phone, string role)
+        {
+            try
+            {
+                string query = "update USERS set name='" + name + "', email='" + email + "', phoneNumber='"
+                    + phone + "', role='" + role + "'where id='" + id + "'";
 
                 // Execute.  
                 DAL.executeQuery(query);

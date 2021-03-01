@@ -5,17 +5,17 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:simpletest.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="800"
+      d:DesignHeight="650" d:DesignWidth="700"
       Title="HomePage">
 
     <Grid ShowGridLines="False">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="380"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" 
                    Grid.Column="0"
@@ -130,16 +130,43 @@
                                    FontSize="16"   
                                    Foreground="Black" />
 
-                        <TextBox x:Name="txtPassword"   
+                        <DockPanel>
+                            <PasswordBox x:Name="txtPasswordBox"   
                                     BorderThickness="1"  
                                     FontSize="16"  
-                                    Width="250"  
+                                    Width="200"  
                                     Height="40"   
                                     Background="{x:Null}"  
                                     HorizontalAlignment="Left"
                                     Margin="10,0,0,0"   
                                     Padding="10,10,0,0"   
-                                    Foreground="Black" />
+                                    Foreground="Black" 
+                                    PasswordChanged="txtPasswordBox_Change"
+                                    />
+                            <TextBox x:Name="txtPassword"   
+                                    BorderThickness="1"  
+                                    FontSize="16"  
+                                    Width="200"  
+                                    Height="40"   
+                                    Background="{x:Null}"  
+                                    HorizontalAlignment="Left"
+                                    Margin="10,0,0,0"   
+                                    Padding="10,10,0,0"   
+                                    Foreground="Black"
+                                    Visibility="Collapsed"
+                                 />
+                            <Button x:Name="btnShow"  
+                                Content="show"  
+                                HorizontalAlignment="Center"
+                                Width="40"   
+                                Height="30"   
+                                Margin="5,0,5,0"  
+                                FontSize="12"     
+                                PreviewMouseLeftButtonDown="btnShow_MouseLeftButtonDown"
+                                PreviewMouseLeftButtonUp="btnShow_MouseLeftButtonUp"
+                                />
+                        </DockPanel>
+                        
 
                         <TextBlock Text="Choose Role"  
                                    VerticalAlignment="Center" 
@@ -214,7 +241,8 @@
                         Click="btnreload_click" />
         </DockPanel>
         <DockPanel Grid.Column="1"
-                   Grid.Row="1">
+                   Grid.Row="1"
+                   Height="Auto">
             <DataGrid Name="userlist" />
         </DockPanel>
     </Grid>
