@@ -7,6 +7,27 @@
       mc:Ignorable="d" 
       d:DesignHeight="650" d:DesignWidth="700"
       Title="HomePage">
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="10,15,0,0"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="Blue"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="10,0"/>
+            <Setter Property="Padding" Value="10,10,0,0"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+    </Page.Resources>
 
     <Grid ShowGridLines="False">
         <Grid.ColumnDefinitions>
@@ -21,18 +42,15 @@
                    Grid.Column="0"
                    VerticalAlignment="Bottom">
             <TextBox x:Name="txtSearch"   
-                        BorderThickness="1"  
                         FontSize="14"  
                         Width="180"  
-                        Height="30"   
-                        Background="{x:Null}"   
-                        HorizontalAlignment="Left"
+                        Height="30"
                         Margin="15,5,5,5"   
-                        Padding="5,5,5,5"   
-                        Foreground="Black"
+                        Padding="5,5,5,5"
                          GotFocus="RemovePlaceholder"
                          LostFocus="AddPlaceholder"
                      />
+            
             <Button x:Name="btnsearch"  
                     Content="Search"  
                     HorizontalAlignment="Right"
@@ -61,74 +79,23 @@
                                 Height="550" >
 
                         <TextBox x:Name="txtid"   
-                                   Visibility="Hidden" />
+                                   Visibility="Collapsed" />
                         
-                        <TextBlock Text="Enter Name"  
-                                   VerticalAlignment="Top"  
-                                   HorizontalAlignment="Left"
-                                   Margin="10,2,0,0"   
-                                   FontWeight="Bold"   
-                                   FontSize="16"   
-                                   Foreground="Black" />
+                        <TextBlock Text="Enter Name" />
 
-                        <TextBox x:Name="txtName"   
-                                    BorderThickness="1"  
-                                    FontSize="16"  
-                                    Width="250"  
-                                    Height="40"   
-                                    Background="{x:Null}"   
-                                    HorizontalAlignment="Left"
-                                    Margin="10,0,0,0"   
-                                    Padding="10,10,0,0"   
-                                    Foreground="Black" />
+                        <TextBox x:Name="txtName" />
 
-                        <TextBlock Text="Enter Email"  
-                                   VerticalAlignment="Center"    
-                                   HorizontalAlignment="Left"
-                                   Margin="10,10,0,0"   
-                                   FontWeight="Bold"   
-                                   FontSize="16"   
-                                   Foreground="Black" />
+                        <TextBlock Text="Enter Email" />
 
-                        <TextBox x:Name="txtEmail"   
-                                    BorderThickness="1"  
-                                    FontSize="16"  
-                                    Width="250"  
-                                    Height="40"   
-                                    Background="{x:Null}"   
-                                    HorizontalAlignment="Left"
-                                    Margin="10,0,0,0"   
-                                    Padding="10,10,0,0"   
-                                    Foreground="Black"
+                        <TextBox x:Name="txtEmail" 
                                     LostFocus="txtEmail_LostFocus"/>   
 
-                        <TextBlock Text="Enter Phone Number"  
-                                   VerticalAlignment="Center"   
-                                   HorizontalAlignment="Left"
-                                   Margin="10,10,0,0"    
-                                   FontWeight="Bold"   
-                                   FontSize="16"   
-                                   Foreground="Black" />
+                        <TextBlock Text="Enter Phone Number"/>
 
                         <TextBox x:Name="txtPhone"   
-                                    BorderThickness="1"  
-                                    FontSize="16"  
-                                    Width="250"  
-                                    Height="40"   
-                                    Background="{x:Null}"  
-                                    HorizontalAlignment="Left"
-                                    Margin="10,0,0,0"   
-                                    Padding="10,10,0,0"   
-                                    Foreground="Black"
                                     LostFocus="txtPhone_LostFocus"/>
 
-                        <TextBlock Text="Enter Password"  
-                                   VerticalAlignment="Center" 
-                                   HorizontalAlignment="Left"
-                                   Margin="10,10,0,0"   
-                                   FontWeight="Bold"   
-                                   FontSize="16"   
-                                   Foreground="Black" />
+                        <TextBlock Text="Enter Password" />
 
                         <DockPanel>
                             <PasswordBox x:Name="txtPasswordBox"   
@@ -166,15 +133,9 @@
                                 PreviewMouseLeftButtonUp="btnShow_MouseLeftButtonUp"
                                 />
                         </DockPanel>
-                        
 
-                        <TextBlock Text="Choose Role"  
-                                   VerticalAlignment="Center" 
-                                   HorizontalAlignment="Left"
-                                   Margin="10,10,0,0"   
-                                   FontWeight="Bold"   
-                                   FontSize="14"   
-                                   Foreground="Black" />
+
+                        <TextBlock Text="Choose Role"/>
 
                         <ComboBox 
                             Name="role"
